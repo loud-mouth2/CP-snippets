@@ -1,0 +1,122 @@
+<snippet>
+	<content><![CDATA[
+const int N=1e5+5;
+ 
+const int maxn=N;
+struct node{
+	int v,mn,mx;
+	int lazy=0;
+	bool flag;
+	//use assign to set leaf valoes depending upon array values
+	void assign(int val)
+	{
+		mn=mx=v=val;
+	}
+	//use merge to set parent's values in relation to its children
+	void merge(node &l,node &r)
+	{
+		mx=max(l.mx,r.mx);
+		mn=min(l.mn,r.mn);
+		v=l.v+r.v;
+	}
+}zero;
+struct segtree{
+	node t[4*maxn];
+public:
+	//if a node has lazy tag then its info is correct but its children's info
+	//is old, so pushdown() before going into children
+	void pushdown(int v,int tl,int tr)
+	{
+		int ln=v*2;
+		int rn=v*2+1;
+		int tm=(tl+tr)/2;
+		if(t[v].flag){
+			apply(ln,tl,tm,t[v].lazy);
+			apply(rn,tm+1,tr,t[v].lazy);
+			t[v].flag=0;
+		}
+	}
+	//apply() is an auxillary function to apply range update and set lazy tag
+	void apply(int v,int tl,int tr,int val)
+	{
+		//so as not to flag the leaf nodes
+		if(tl!=tr){
+			t[v].flag=1;
+			t[v].lazy=val;
+		}
+		t[v].mx=t[v].mn=val;
+		t[v].v=(tr-tl+1)*val;
+	}
+	void build(int a[], int v, int tl, int tr) {
+		if (tl == tr) {
+			t[v].assign(a[tl]);
+			return;
+		} else {
+			int tm = (tl + tr) / 2;
+			build(a, v*2, tl, tm);
+			build(a, v*2+1, tm+1, tr);
+			t[v].merge(t[v*2],t[v*2+1]);
+		}
+	}
+	void build(int a[]){
+		build(a,1,0,maxn-1);
+	}
+	node query(int v, int tl, int tr, int l, int r) {
+		if (l > tr || r < tl)
+			return zero;
+		if (l <= tl && tr <= r) {
+			return t[v];
+		}
+		pushdown(v,tl,tr);
+		int tm = (tl + tr) / 2;
+		node a,b,ans;
+		a=query(v*2, tl, tm, l, r);
+		b=query(v*2+1, tm+1, tr, l, r);
+		ans.merge(a,b);
+		return ans;
+	}
+	node query(int l,int r){
+		return query(1,0,maxn-1,l,r);
+	}
+	void rupd(int v, int tl, int tr, int l, int r, int val)
+	{
+		if(l > tr || r < tl || t[v].mx<val)
+			return;
+		if(l <= tl && tr <= r && t[v].mx==t[v].mn)
+		{
+			apply(v,tl,tr,t[v].mx%val);
+			return;
+		}
+		pushdown(v,tl,tr);
+		int tm = (tl + tr)/2;
+		rupd(v*2,tl,tm,l,r,val);
+		rupd(v*2+1,tm+1,tr,l,r,val);
+		t[v].merge(t[v*2],t[v*2+1]);
+	}
+	void rupd(int l,int r,int val){
+		rupd(1,0,maxn-1,l,r,val);
+	}
+	void pupd(int v,int tl,int tr,int k,int x){
+		if(k>tr || k<tl)return;
+		if(tl==tr && tl==k){
+			t[v].assign(x);
+			return;
+		}
+		pushdown(v,tl,tr);
+		int tm = (tl + tr)/2;
+		pupd(v*2,tl,tm,k,x);
+		pupd(v*2+1,tm+1,tr,k,x);
+		t[v].merge(t[v*2],t[v*2+1]);
+	}
+	void pupd(int index,int val){
+		pupd(1,0,maxn-1,index,val);
+	}
+}t;
+ 
+int a[N];
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	 <tabTrigger>segtree(struct)</tabTrigger> 
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

@@ -1,0 +1,44 @@
+<snippet>
+	<content><![CDATA[
+ll power( ll b, ll e)
+{
+    if(e==0) return 1;
+    if(e&1) return b*power(b*b,e/2);
+    return power(b*b,e/2);
+}
+
+ll extended_gcd(ll a, ll b, ll& x, ll& y) {
+    if (b == 0) {
+        x = 1;
+        y = 0;
+        return a;
+    }
+    ll x1, y1;
+    ll d = gcd(b, a % b, x1, y1);
+    x = y1;
+    y = x1 - y1 * (a / b);
+    return d;
+}
+
+ll mod_inv(ll a, ll m, bool isMprime=false)
+{
+    if(isMprime)
+        return power(a, m-2);
+    ll x, y;
+    ll g = extended_gcd(a, m, x, y);
+    if (g != 1) {
+        //cout << "No solution!";
+        return -1;
+    }
+    else {
+        x = (x % m + m) % m;
+        return x;
+    }
+}
+//to find ans such that (ans*a)%m == 1
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>modularinverse</tabTrigger> 
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

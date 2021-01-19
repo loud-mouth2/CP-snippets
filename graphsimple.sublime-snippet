@@ -1,0 +1,35 @@
+<snippet>
+	<content><![CDATA[
+/*input
+
+*/
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define pb push_back
+//#define int long long
+const int N=1e5+5;
+bool ans=true;
+vector<bool> vis;
+vector<vector<int>> g(N);
+int n, m;
+vector<int> par(N, -1);
+signed main()
+{
+	ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+	cin>>n>>m;
+	for(int i=0; i<m; ++i){
+		int a,b;
+		cin>>a>>b;
+		g[a].pb(b);
+		g[b].pb(a);
+	}
+
+	return 0;	
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+ <tabTrigger>graphsimple</tabTrigger> 
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

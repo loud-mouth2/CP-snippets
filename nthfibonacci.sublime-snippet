@@ -1,0 +1,33 @@
+<snippet>
+	<content><![CDATA[
+//here, the terms : 0,1,1,2,3.... are indexed as 0,1,2,3,4... only accurate till long limit :(
+pair<long long,long long> _fib(long n)
+{
+	if(n==0)
+	{
+		return make_pair(0,1);
+	}
+	else 
+	{
+		pair<long long,long long> p=_fib(n/2);
+		long long c=p.first*(2*p.second-p.first);
+		long long d=p.first*p.first+p.second*p.second;
+		if(n%2==0)
+			return make_pair(c,d);
+		else return make_pair(d,c+d);
+	}
+}
+
+long long fibonacci(long long term)
+{
+	if(term<0)
+		cout<<"error"<<endl;
+	else return _fib(term).first;
+}
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	 <tabTrigger>fibonacci</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

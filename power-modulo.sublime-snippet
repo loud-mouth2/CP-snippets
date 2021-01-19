@@ -1,0 +1,15 @@
+<snippet>
+	<content><![CDATA[
+ll powermod(ll b,ll e,ll m)
+{
+	if(e==0) return 1;
+	if(e&1) return b*powermod(b*b%m,e/2,m)%m;
+	return powermod(b*b%m,e/2,m);
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>powermod</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
+

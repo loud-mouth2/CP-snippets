@@ -1,0 +1,17 @@
+<snippet>
+	<content><![CDATA[
+ll combination(ll n, ll r) {
+    if(r==0)
+        return 1;
+    else {
+        ll num = n * combination(n - 1, r - 1);
+        return num/r;
+    }
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>ncr</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
+

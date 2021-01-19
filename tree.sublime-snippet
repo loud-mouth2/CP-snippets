@@ -1,0 +1,76 @@
+<snippet>
+	<content><![CDATA[
+int v, e;
+const int MAXN = 100005;
+vector<int> g[MAXN];
+int tin[MAXN];
+int tout[MAXN];
+int fup[MAXN]; //earliest time stamp that can be achieved that can be achieved via the subtree at i
+int T=0;
+vector<pair<int, int>> bridge;
+bool vis[MAXN];
+int parent[MAXN];
+int level[MAXN];
+int dfs(int x, int par=-1)
+{
+	tin[x] = ++T;
+	vis[x] = true;
+	fup[x] = tin[x];
+
+	for(auto y : g[x])
+	{
+		if(tin[y]>0 || !vis[y])
+		{
+			//for the visited
+			if(par != y) fup[x] = min(fup[x], tin[y]);
+		}
+		else
+		{
+			level[y] = level[x] + 1;
+			parent[y] = x;
+			int fup_of_child = dfs(y, x);
+
+			fup[x] = min(fup[x], fup_of_child);
+			if(fup_of_child > tin[x])
+			{
+				//earliest time child can achieve is after the entry of its parent. Thus child - parent relation is a bridge
+				bridge.pb({x, y});
+			}
+			else
+			{
+				//just a link(union to make bridge tree)
+			}
+		}
+	}
+	tout[x] = ++T;
+	return fup[x];
+}
+int blevel[MAXN];
+pair<int, int> bfs(int x)
+{
+	int n = v+1;
+	for(int i = 0; i < n; i++)
+		blevel[i] = n + 1;
+	blevel[x] = 0;
+	queue<int> q;
+	q.push(x);
+	int last = 0;
+	while(!q.empty())
+	{
+	 	last = q.front();
+	 	q.pop();
+	 	for(auto y : g[last])
+	 		if(blevel[y] > blevel[last] + 1)
+	 		{
+	 		 	blevel[y] = blevel[last] + 1;
+	 		 	q.push(y);
+	 		}
+	}
+	return make_pair(last, blevel[last]);
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>treebasics</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

@@ -1,0 +1,43 @@
+<snippet>
+	<content><![CDATA[
+/*input
+
+*/
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define vi vector<ll>
+#define rep(i,a,b) for(int i=a; i<b; ++i)
+#define pb push_back
+#define endl '\n'
+#define sa(x) sort((x).begin(), (x).end());
+//#define int long long
+
+template<typename T, typename U> static inline void amin(T &x, U y){ if(y<x) x=y; }
+template<typename T, typename U> static inline void amax(T &x, U y){ if(x<y) x=y; }
+template<typename T,typename U> std::ostream& operator<<(std::ostream& out, std::pair<T,U> a) {out<<" ("<<a.fr<<" "<<a.sc<<") "; return out;}
+template<typename T,typename U> std::istream& operator>>(std::istream& in, std::pair<T,U> &a) {in>>a.fr>>a.sc; return in;}
+template<typename T> static inline void sd(vector<T> &x) {sort(all(x), greater<T>()) ; }
+
+
+void solve(){
+		
+}
+
+signed main()
+{
+	ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
+	int testcases=1;
+	//cin>>testcases;
+	while(testcases--){
+		solve();
+	}
+	return 0;	
+}
+
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	 <tabTrigger>fight</tabTrigger> 
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

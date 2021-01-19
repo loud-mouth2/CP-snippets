@@ -1,0 +1,48 @@
+<snippet>
+	<content><![CDATA[
+const int INF = 1000000000;
+pair<int, int> dijkstra(int start) {
+	pair<int, int> ret(0, start); //{max dist, farthest point}
+    int n = g.size()-1;
+    vector<int> d(n+1, INF); //distance
+    vector<int> p(n+1, -1); //parent
+    vector<bool> u(n+1, false);
+    if(sz(g[start]) == 0)
+    {
+    	return ret;
+    }
+    d[start] = 0;
+    for (int i = 1; i <= n; i++) {
+        int v = -1;
+        for (int j = 1; j <= n; j++) {
+            if (!u[j] && (v == -1 || d[j] < d[v]))
+                v = j;
+        }
+
+        if (d[v] == INF)
+            break;
+
+        u[v] = true;
+        for (auto edge : g[v]) {
+            int to = edge.first;
+            int len = edge.second;
+
+            if (d[v] + len < d[to]) {
+                d[to] = d[v] + len;
+                p[to] = v;
+                if(d[to] > ret.fr)
+                {
+                	ret = {d[to], to};
+                }
+            }
+        }
+    }
+    //disp(d);
+    return ret;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	 <tabTrigger>dickstra</tabTrigger> 
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

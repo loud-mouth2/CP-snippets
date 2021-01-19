@@ -1,0 +1,24 @@
+<snippet>
+	<content><![CDATA[
+	std::vector<string> store_parts;
+	string s;
+	cin>>s;
+	char str[s.length()+1];
+	strcpy(str, s.c_str());
+	    // Returns first token 
+    char* token = strtok(str, "."); 
+  
+    // Keep printing tokens while one of the 
+    // delimiters present in str[]. 
+    while (token != NULL) { 
+        store_parts.pb(token); 
+        token = strtok(NULL, "."); 
+    } 
+    //next line of code to check the stored values
+    //trav(store_parts)cout<<x<<endl;
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>SplitMyString(token)</tabTrigger> 
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

@@ -1,0 +1,41 @@
+<snippet>
+	<content><![CDATA[
+const int N = 1003;
+struct FenwickTree2D_OneIndexed{
+	int bit[N][N]={};
+	int n;
+	void build(int id, const vector<int> &v){ 
+		n = v.size();
+		for (size_t i = 0; i <= v.size()-1; i++)
+				update(id, i+1, v[i]);
+	}
+    void update(int y, int x, int val) {
+	  int y1;
+	  while (y <= n) {
+	    y1 = x;
+	    while (y1 <= n) {
+	      bit[y][y1] += val;
+	      y1 += (y1 & -y1);
+	    }
+	    y += (y & -y);
+	  }
+	}
+	ll sum(int y, int x){
+		int y1, ret=0;
+		while(y > 0){
+			y1=x;
+			while(y1>0){
+				ret += bit[y][y1];
+				y1 -= (y1 & -y1);
+			}
+			y -= (y & -y);
+		}
+		return ret;
+	}
+}t;
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>fenwicktree2D_one_indexed</tabTrigger> 
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>

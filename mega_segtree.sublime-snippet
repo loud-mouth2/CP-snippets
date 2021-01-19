@@ -1,0 +1,32 @@
+<snippet>
+	<content><![CDATA[
+const int RANDOM = chrono::high_resolution_clock::now().time_since_epoch().count();
+struct chash {
+    int operator()(int x) const { return x ^ RANDOM; }
+};
+gp_hash_table<ll, ll, chash> seg;
+const int N = 1e5;
+ll get(ll x) { return (seg.find(x) == seg.end()) ? 0 : seg[x]; }
+void modify(ll p, ll val) {
+    for (seg[p += N] = val; p > 0; p >>= 1) {
+        seg[p >> 1] = get(p) + get(p ^ 1);
+    }
+}
+
+ll query(ll l, ll r) { //query for [l, r]
+    ll res = 0;
+    r++;
+    for (l += N, r += N; l < r; l >>= 1, r >>= 1) {
+        if (l & 1)
+            res += get(l++);
+        if (r & 1)
+            res += get(--r);
+    }
+    return res;
+}
+]]></content>
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>mega_segtree</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!-- <scope>source.python</scope> -->
+</snippet>
